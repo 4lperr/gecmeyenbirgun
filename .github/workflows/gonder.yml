@@ -1,0 +1,50 @@
+name: Telegram Gonder
+
+on:
+  schedule:
+    # Türkiye saatiyle:
+    # 12:00 TR = 09:00 UTC
+    # 15:00 TR = 12:00 UTC
+    # 17:00 TR = 14:00 UTC
+    # 20:00 TR = 17:00 UTC
+    # 00:00 TR = 21:00 UTC
+    - cron: '0 9 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 14 * * *'
+    - cron: '0 17 * * *'
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+jobs:
+  gonder:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Repoyu çek
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Kütüphaneleri kur
+        run: pip install Pillow requests python-dotenv
+
+      - name: Görsel üret ve Telegram'a gönder
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python gonder.py
+
+      - name: Değişiklikleri commit et
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add arsiv/ yazilar.json
+          git commit -m "Gonderim: $(date +'%Y-%m-%d %H:%M')" || echo "Değişiklik yok"
+          git push
