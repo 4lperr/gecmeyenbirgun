@@ -206,7 +206,8 @@
   },
   {
     "id": 42,
-    "metin": "Beni yalnız bırakan şey,\ninsanların varlığıydı."
+    "metin": "Beni yalnız bırakan şey,\ninsanların varlığıydı.",
+    "kullanildi": true
   },
   {
     "id": 43,
