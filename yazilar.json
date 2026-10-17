@@ -246,7 +246,8 @@
   },
   {
     "id": 50,
-    "metin": "Ben hep \"iyiyim\" dedim,\nçünkü kimse \"iyi değilsin\" demedi."
+    "metin": "Ben hep \"iyiyim\" dedim,\nçünkü kimse \"iyi değilsin\" demedi.",
+    "kullanildi": true
   },
   {
     "id": 51,
